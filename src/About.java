@@ -12,6 +12,9 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.Color;
 
 
 public class About extends JDialog {
@@ -35,11 +38,15 @@ public class About extends JDialog {
 	 * Create the dialog.
 	 */
 	public About() {
+		getContentPane().setBackground(Color.WHITE);
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
+		setResizable(false);
 		setBounds(100, 100, 450, 300);
+		setModal(true);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[1px][424px]", "[1px][218px]"));
+		contentPanel.setLayout(new MigLayout("", "[1px][424px]", "[1px][218px][]"));
 		{
 			JLabel lblHomeServer = new JLabel("Home Server");
 			lblHomeServer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -47,10 +54,16 @@ public class About extends JDialog {
 			contentPanel.add(lblHomeServer, "cell 1 0,grow");
 		}
 		{
+			JLabel lblNewLabel = new JLabel("");
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setIcon(new ImageIcon(About.class.getResource("/images/logo.PNG")));
+			contentPanel.add(lblNewLabel, "flowy,cell 1 1,alignx center");
+		}
+		{
 			JLabel lblVersion = new JLabel("Version 0.1");
 			lblVersion.setVerticalAlignment(SwingConstants.TOP);
 			lblVersion.setHorizontalAlignment(SwingConstants.CENTER);
-			contentPanel.add(lblVersion, "cell 1 1,grow");
+			contentPanel.add(lblVersion, "cell 1 2,grow");
 		}
 		{
 			JPanel buttonPane = new JPanel();
