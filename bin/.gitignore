@@ -1,3 +1,5 @@
+/helper
+/images
 /DataParser.class
 /MainWindow$1.class
 /MainWindow$2.class
@@ -9,5 +11,6 @@
 /MainWindow.class
 /MySQLAccess.class
 /NewsDownloader.class
-/helper
-/images
+/About.class
+/MainWindow$7.class
+/MainWindow$8.class

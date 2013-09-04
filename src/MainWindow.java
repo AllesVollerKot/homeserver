@@ -180,11 +180,25 @@ public class MainWindow {
 
 		JMenu mnBearbeiten = new JMenu("Bearbeiten");
 		menuBar.add(mnBearbeiten);
+		
+		JMenuItem mntmTest = new JMenuItem("test");
+		mntmTest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
+		mnBearbeiten.add(mntmTest);
 
 		JMenu mnHilfe = new JMenu("Hilfe");
 		menuBar.add(mnHilfe);
 
 		JMenuItem menuItem = new JMenuItem("?");
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			About.main(null);
+			
+			}
+		});
 		mnHilfe.add(menuItem);
 
 		timer = new Timer();
