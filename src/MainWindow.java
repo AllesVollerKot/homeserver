@@ -36,6 +36,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JTabbedPane;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class MainWindow {
 
@@ -76,8 +81,8 @@ public class MainWindow {
 	private void initialize() {
 		frame = new MinimizeToTrayJFrame();
 		frame.setTitle("HoMe Downloader");
-		frame.setBounds(100, 100, 450, 434);
-		frame.setMinimumSize(new Dimension(350, 200));
+		frame.setBounds(100, 100, 424, 358);
+		frame.setMinimumSize(new Dimension(400, 200));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -94,11 +99,24 @@ public class MainWindow {
 				startDownload();
 			}
 		});
-		frame.getContentPane().setLayout(
-				new MigLayout("", "[76px][44px][44px][75px][200\r\npx]",
-						"[23px][][217px][][217px][]"));
-		frame.getContentPane().add(btnStart,
-				"cell 0 0,alignx center,aligny center");
+		FormLayout formLayout = new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("1px"),
+				ColumnSpec.decode("53px"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("53px"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("95px"),
+				FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("39px"),
+				ColumnSpec.decode("61px"),
+				ColumnSpec.decode("pref:grow"),},
+			new RowSpec[] {
+				FormFactory.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("50px"),
+				FormFactory.NARROW_LINE_GAP_ROWSPEC,
+				RowSpec.decode("fill:default:grow"),});
+		frame.getContentPane().setLayout(formLayout);
+		frame.getContentPane().add(btnStart, "2, 2, center, center");
 
 		JButton btnStop = new JButton(
 				new ImageIcon(
@@ -111,18 +129,15 @@ public class MainWindow {
 				stopDownload();
 			}
 		});
-		frame.getContentPane().add(btnStop,
-				"cell 1 0,alignx center,aligny center");
+		frame.getContentPane().add(btnStop, "4, 2, center, center");
 
 		JLabel lblIntervalInMin = new JLabel("Interval in Min: ");
 		lblIntervalInMin.setBorder(paddingBorder);
-		frame.getContentPane().add(lblIntervalInMin,
-				"cell 2 0,alignx center,aligny center");
+		frame.getContentPane().add(lblIntervalInMin, "6, 2, center, center");
 
 		spinnerInterval = new JSpinner();
 		spinnerInterval.setModel(new SpinnerNumberModel(15, 5, 60, 5));
-		frame.getContentPane().add(spinnerInterval,
-				"cell 3 0,alignx center,aligny center");
+		frame.getContentPane().add(spinnerInterval, "8, 2, center, center");
 
 		lblStatus = new JLabel(
 				new ImageIcon(
@@ -133,23 +148,20 @@ public class MainWindow {
 		lblStatus.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblStatus.setOpaque(true);
 		lblStatus.setBorder(paddingBorder);
-		frame.getContentPane().add(lblStatus,
-				"cell 4 0,alignx center,aligny center");
-
-		JLabel lblStatus_1 = new JLabel("Status:");
-		frame.getContentPane().add(lblStatus_1, "cell 0 1,alignx center");
+		frame.getContentPane().add(lblStatus, "10, 2, left, center");
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		frame.getContentPane().add(tabbedPane, "2, 4, 9, 1, default, fill");
 
 		JScrollPane scrollPane = new JScrollPane();
-		frame.getContentPane().add(scrollPane, "cell 0 2 5 1,grow");
+		tabbedPane.addTab("Status", null, scrollPane, null);
 
 		textAreaStatus = new JTextArea();
 		scrollPane.setViewportView(textAreaStatus);
 
-		JLabel lblNews = new JLabel("News:");
-		frame.getContentPane().add(lblNews, "cell 0 3,alignx center");
-
 		JScrollPane scrollPane_1 = new JScrollPane();
-		frame.getContentPane().add(scrollPane_1, "cell 0 4 5 1,grow");
+		tabbedPane.addTab("News", null, scrollPane_1, null);
 
 		textAreaNews = new JTextArea();
 		scrollPane_1.setViewportView(textAreaNews);
